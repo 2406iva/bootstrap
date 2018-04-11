@@ -46,7 +46,7 @@ if(!isset($_GET["sifra"])){
 					<?php
 					include_once "../include/izbornik.php";
 					?>
-					<form method="post" action="unesibiljesku.php">
+					<form method="post" action="promjenabiljeskeaction.php">
 						<div class="form-group">
 							<label for="autor">Autor</label>
 							<input type="text" class="form-control" id="auto" name="autor" placeholder="<?php echo $rezultat -> autor; ?>" >
