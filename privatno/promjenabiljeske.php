@@ -15,9 +15,11 @@ if(!isset($_GET["sifra"])){
 		header("location: " . $putanjaAPP . "logout.php");
 	}	
 }else{	
-	$izraz=$veza->prepare("select * from citanje where sifra=:sifra");
+	$izraz=$veza->prepare("select b.sifra, a.naslov as naslov, a.autor as autor, b.biljeska as biljeska
+							from knjiga a inner join citanje b
+							on a.sifra=b.knjiga;");
 	$izraz->execute($_GET);
-	$_POST=$izraz->fetch(PDO::FETCH_ASSOC);
+	$rezultat=$izraz->fetch(PDO::FETCH_OBJ);
 }
 ?>
 
@@ -46,26 +48,29 @@ if(!isset($_GET["sifra"])){
 					<?php
 					include_once "../include/izbornik.php";
 					?>
-					<form method="post" action="promjenabiljeskeaction.php">
+					<form class="log-in-form" action="<?php echo $putanjaAPP; ?>privatno/promjenbiljeskeaction.php" method="post">
 						<div class="form-group">
-							<label for="autor">Autor</label>
-							<input type="text" class="form-control" id="auto" name="autor" placeholder="<?php echo $rezultat -> autor; ?>" >
+							<label for="naslov">Naslov knjige</label>
+							<input type="text" class="form-control" id="naslov" name="naslov" placeholder="<?php echo $rezultat -> naslov; ?>"
+							 ">
 						</div>
-							<br/>
+
 						<div class="form-group">
-							<label for="naslov">Naslov</label>
-							<input type="text" class="form-control" id="knjiga" name="knjiga" placeholder="<?php echo $rezultat -> naslov; ?>" >
+							<label for="autor">Naziv autora</label>
+							<input type="text" class="form-control" id="autor" name="autor" placeholder="<?php echo $rezultat -> autor; ?>"
+							">
 						</div>
-							<hr/>
+
+						<br/
 						<div class="form-group">
 							<label for="biljeska">Bilješka</label>
-							<input type="text" class="form-control" id="autor" name="biljeska"
-							value="<?php echo isset($_POST["biljeska"]) ? $_POST["biljeska"] : ""; ?> ">
+							<input type="text" class="form-control" id="autor" name="biljeska" 
+							value="<?php echo $rezultat -> biljeska; ?>">
 						</div>
 							<hr/>
 							<hr/>
 							<br/>
-												
+						<br/>
 						<button type="submit" class="btn btn-primary">Unesi</button>
 					</form>
 					</div>	

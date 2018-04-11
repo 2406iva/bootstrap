@@ -67,7 +67,7 @@ if (isset($_GET["sifra"])) {
 	<tbody>
 				<?php 
 					$izraz = $veza->prepare("
-							select a.naslov as naslov, a.autor as autor, b.biljeska as biljeska
+							select b.sifra, a.naslov as naslov, a.autor as autor, b.biljeska as biljeska
 							from knjiga a inner join citanje b
 							on a.sifra=b.knjiga;");
 					$izraz->execute();
